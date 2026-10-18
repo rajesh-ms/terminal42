@@ -93,7 +93,7 @@ export function CanvasAssistant({ getContext, onCreate, onAnimate, onEdit, onDel
       onCreate(specs)
     } catch (e) { setTreeErr(String(e)) }
   }
-  const [modelId, setModelId] = useState<string>(() => localStorage.getItem('t42-assistant-model') || model || 'claude-opus-4.8')
+  const [modelId, setModelId] = useState<string>(() => localStorage.getItem('t42-assistant-model') || model || 'gpt-6.1-sol')
   const [quality, setQuality] = useState<boolean>(() => localStorage.getItem('t42-assistant-quality') !== 'fast')
   useEffect(() => { localStorage.setItem('t42-assistant-quality', quality ? 'quality' : 'fast') }, [quality])
   const [modelOpen, setModelOpen] = useState(false)

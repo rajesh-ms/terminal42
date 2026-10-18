@@ -17,15 +17,28 @@ export type DisplayModel = { id: string; label: string; group: string }
  * Mirrors the entitlement-filtered list the CLI currently returns. When the
  * live fetch reports models that are not here, update this list rather than
  * letting the two diverge again.
+ *
+ * Synced against the CLI's live list on 2026-10-18. Tenant-internal entries are
+ * deliberately left out — the CLI advertises models whose own label carries an
+ * "(Internal only)" suffix, and this list ships to every user of the app, so
+ * pinning one tenant's internal entitlement here would put a model in the
+ * picker that nobody else can select.
  */
 export const FALLBACK_MODELS: DisplayModel[] = [
+  { id: 'claude-opus-5.5', label: 'Claude Opus 5.5', group: 'Anthropic' },
   { id: 'claude-opus-5', label: 'Claude Opus 5', group: 'Anthropic' },
   { id: 'claude-opus-4.8', label: 'Claude Opus 4.8', group: 'Anthropic' },
   { id: 'claude-opus-4.7', label: 'Claude Opus 4.7', group: 'Anthropic' },
   { id: 'claude-opus-4.6', label: 'Claude Opus 4.6', group: 'Anthropic' },
+  { id: 'claude-sonnet-5.5', label: 'Claude Sonnet 5.5', group: 'Anthropic' },
   { id: 'claude-sonnet-5', label: 'Claude Sonnet 5', group: 'Anthropic' },
   { id: 'claude-sonnet-4.6', label: 'Claude Sonnet 4.6', group: 'Anthropic' },
+  { id: 'claude-haiku-5.5', label: 'Claude Haiku 5.5', group: 'Anthropic' },
   { id: 'claude-haiku-4.5', label: 'Claude Haiku 4.5', group: 'Anthropic' },
+  { id: 'gpt-6.1-sol', label: 'GPT-6.1 Sol', group: 'OpenAI' },
+  { id: 'gpt-6-sol', label: 'GPT-6 Sol', group: 'OpenAI' },
+  { id: 'gpt-6-astra', label: 'GPT-6 Astra', group: 'OpenAI' },
+  { id: 'gpt-6-luna', label: 'GPT-6 Luna', group: 'OpenAI' },
   { id: 'gpt-5.6-sol', label: 'GPT-5.6 Sol', group: 'OpenAI' },
   { id: 'gpt-5.6-terra', label: 'GPT-5.6 Terra', group: 'OpenAI' },
   { id: 'gpt-5.6-luna', label: 'GPT-5.6 Luna', group: 'OpenAI' },
@@ -34,10 +47,13 @@ export const FALLBACK_MODELS: DisplayModel[] = [
   { id: 'gpt-5.4-mini', label: 'GPT-5.4 mini', group: 'OpenAI' },
   { id: 'gpt-5.3-codex', label: 'GPT-5.3 Codex', group: 'OpenAI' },
   { id: 'gpt-5-mini', label: 'GPT-5 mini', group: 'OpenAI' },
+  { id: 'gemini-4-argon', label: 'Gemini 4 Argon', group: 'Google' },
+  { id: 'gemini-3.8-flash', label: 'Gemini 3.8 Flash', group: 'Google' },
   { id: 'gemini-3.7-flash', label: 'Gemini 3.7 Flash', group: 'Google' },
   { id: 'gemini-3.6-flash', label: 'Gemini 3.6 Flash', group: 'Google' },
   { id: 'gemini-3.5-flash', label: 'Gemini 3.5 Flash', group: 'Google' },
   { id: 'gemini-3.1-pro-preview', label: 'Gemini 3.1 Pro', group: 'Google' },
+  { id: 'grok-4.7', label: 'Grok 4.7', group: 'xAI' },
   { id: 'grok-4.6', label: 'Grok 4.6', group: 'xAI' },
   { id: 'grok-4.5', label: 'Grok 4.5', group: 'xAI' },
   { id: 'mai-code-1.1-flash', label: 'MAI-Code-1.1-Flash', group: 'Microsoft' },

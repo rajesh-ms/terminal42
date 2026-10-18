@@ -6,7 +6,7 @@ import { join } from 'node:path'
 const DEFAULTS = {
   notifyAfterSeconds: 30,
   notifyCooldownSeconds: 180,
-  defaultModel: 'claude-opus-4.8',
+  defaultModel: 'gpt-6.1-sol',
   notificationsEnabled: true,
   brainAutoApply: true,
   accentColor: '#0ea5e9',

@@ -73,15 +73,15 @@ describe('shortlistModels', () => {
   })
 
   it('keeps the newest model of each provider', () => {
-    expect(short.map((m) => m.id)).toContain('claude-opus-5')
-    expect(short.map((m) => m.id)).toContain('gemini-3.7-flash')
-    expect(short.map((m) => m.id)).toContain('grok-4.6')
+    expect(short.map((m) => m.id)).toContain('claude-opus-5.5')
+    expect(short.map((m) => m.id)).toContain('gemini-3.8-flash')
+    expect(short.map((m) => m.id)).toContain('grok-4.7')
   })
 
   it('keeps distinct families rather than three generations of one', () => {
     // Spending all of Anthropic's slots on Opus would hide Sonnet entirely.
     const ids = short.map((m) => m.id)
-    expect(ids).toContain('claude-sonnet-5')
+    expect(ids).toContain('claude-sonnet-5.5')
     expect(ids).not.toContain('claude-opus-4.7')
   })
 
