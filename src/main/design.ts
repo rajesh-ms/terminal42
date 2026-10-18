@@ -988,12 +988,12 @@ async function send(
   if (resolvedModel) args.push('--model', resolvedModel)
   if (d.copilotSessionId && !opts.freshSession) args.push('--resume', d.copilotSessionId)
 
-  // Disable MCP servers that aren't needed for THIS run. Each enabled
-  // MCP server adds startup latency + tool-list bloat the model has to
-  // All custom MCP servers (figma, figma-write, viztweak, workiq) have been
-  // removed from ~/.copilot/mcp-config.json — Figma work now happens through
-  // the model's general HTML / spec generation, not via Plugin API tooling.
-  // Nothing to disable here anymore.
+  // MCP servers come from the user's ~/.copilot/mcp-config.json, which the CLI
+  // reads for every session — there is nothing to disable per run. Figma work
+  // now happens through the model's general HTML / spec generation rather than
+  // Plugin API tooling. When the user has Cowork enabled the workiq server is
+  // deliberately left in place, so a design run can still reach their M365
+  // context.
 
   // Defensive: if the target version file somehow already exists (a previous
   // run left a partial write, a manual touch, etc.), delete it now so the

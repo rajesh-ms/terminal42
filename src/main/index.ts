@@ -33,6 +33,7 @@ import { startAutoPoke, stopAutoPoke } from './autoPoke'
 import { registerActivityIpc } from './activity'
 import { registerSearchIpc } from './search'
 import { registerVizTweakIpc } from './viztweak'
+import { ensureCoworkOnStartup, registerCoworkIpc } from './cowork'
 import { registerBrowserStateIpc } from './browserState'
 import { registerTemplatesIpc } from './templates'
 import { registerTemplatePreviewsIpc } from './template-previews'
@@ -370,6 +371,11 @@ app.whenReady().then(() => {
   registerVoiceIpc()
   registerSettingsIpc()
   registerCopilotCliSettingsIpc()
+  registerCoworkIpc()
+  // Register (or, if the user turned it off, remove) the Work IQ MCP server
+  // before any session can spawn, so a `copilot` launched from the terminal
+  // pane sees the same toolset as one launched from chat.
+  void ensureCoworkOnStartup()
   registerModelsIpc(() => mainWindow)
   initModelCatalog(() => mainWindow)
   registerInsightsIpc(() => mainWindow)

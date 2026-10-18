@@ -20,6 +20,7 @@ import {
 } from './turnSnapshot'
 import { pruneStore, type Store } from './localSnapshot'
 import { copilotEnvSync, invalidateCopilotToken } from './copilotAuth'
+import { isCoworkRegisteredSync } from './cowork'
 
 // Where the work is being read.
 //
@@ -518,6 +519,21 @@ function send(
     ].join('\n')
   }
 
+  // When Cowork is registered, say so: workiq tools are invisible to a model
+  // that does not know it has them, and the point of the integration is that
+  // the agent grounds answers in the user's real mail, calendar and files
+  // instead of asking them to paste context. Silent when the entry is absent,
+  // so a stock install reads exactly as it did before.
+  let coworkPrefix = ''
+  if (isCoworkRegisteredSync()) {
+    coworkPrefix = [
+      'MICROSOFT 365 CONTEXT available via the workiq MCP server (tools are prefixed workiq-).',
+      "  Use it to ground answers in the user's own email, calendar, files, Teams messages, people and Planner before asking them to paste anything. Ask a natural-language question; do not invent entity IDs.",
+      '  If a workiq call fails, say so plainly. Never substitute invented data for a real result.',
+      ''
+    ].join('\n')
+  }
+
   // Recalled Brain notes. This is background the agent would otherwise have to
   // be told again every session, so it belongs in the stable prefix ahead of
   // the request. buildMemoryContext returns a null block when nothing clears
@@ -539,6 +555,7 @@ function send(
       { role: 'system', content: HOUSING_PREFIX },
       { role: 'system', content: modePrefix },
       ...(figmaPrefix ? [{ role: 'system' as const, content: figmaPrefix }] : []),
+      ...(coworkPrefix ? [{ role: 'system' as const, content: coworkPrefix }] : []),
       ...(opts.prefix ? [{ role: 'system' as const, content: opts.prefix }] : []),
       ...(memory.block ? [{ role: 'system' as const, content: memory.block }] : []),
       ...(reframe ? [{ role: 'system' as const, content: reframe }] : [])

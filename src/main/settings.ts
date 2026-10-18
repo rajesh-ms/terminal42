@@ -30,7 +30,13 @@ const DEFAULTS = {
   // your design system. When set, "newFile" exports become "existingFile"
   // exports against this key, which avoids the unclaimed-file empty result
   // and lets the agent reuse your components.
-  defaultFigmaFile: ''
+  defaultFigmaFile: '',
+  // Register the Work IQ ("Cowork") MCP server in ~/.copilot/mcp-config.json so
+  // every Copilot CLI session terminal42 starts can ground answers in the
+  // user's Microsoft 365 context. On by default; the switch exists so a user
+  // who would rather terminal42 not manage their MCP servers can turn it off
+  // and have that choice survive a restart.
+  coworkEnabled: true
 }
 
 export type Settings = typeof DEFAULTS
@@ -47,7 +53,7 @@ export function getSettings(): Settings {
   return out
 }
 
-function setSetting(key: keyof Settings, value: unknown): void {
+export function setSetting(key: keyof Settings, value: unknown): void {
   getDb()
     .prepare(
       `INSERT INTO settings_kv (key, value) VALUES (?, ?)
